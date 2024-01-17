@@ -10,8 +10,9 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-SurtDistortionAudioProcessor::SurtDistortionAudioProcessor()
-#ifndef JucePlugin_PreferredChannelConfigurations
+SurtDistortionAudioProcessor::SurtDistortionAudioProcessor() : juce::AudioProcessor(), apvts(*this, nullptr, "Parameters", createParameter()){}
+
+/*#ifndef JucePlugin_PreferredChannelConfigurations
      : AudioProcessor (BusesProperties()
                      #if ! JucePlugin_IsMidiEffect
                       #if ! JucePlugin_IsSynth
@@ -19,11 +20,11 @@ SurtDistortionAudioProcessor::SurtDistortionAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       ), apvts (*this, nullptr, "Parameters", createParameters())
-#endif
+                       ), apvts (*this, nullptr, "Parameters",);
+ #endif
 {
 }
-
+*/
 SurtDistortionAudioProcessor::~SurtDistortionAudioProcessor()
 {
 }
@@ -191,11 +192,14 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 }
 
     juce::AudioProcessorValueTreeState::ParameterLayout SurtDistortionAudioProcessor::createParameter()
+
 {
-    std::vector<std::unique_ptr<juce::RangedAudioParameter>> params;
-    
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("DRIVE", "Drive",  0.0f, 1.0f, 0.5 ));
-                     
-    return {params.begin(),params.end() };
+        std::vector<std::unique_ptr<juce::RangedAudioParameter>> params;
+        
+        params.push_back(std::make_unique<juce::AudioParameterFloat>("DRIVE", "Drive", 0.0f,1.0f,0.5f));
+        
+        
+        return {params.begin(), params.end()} ;
+ 
 }
  

@@ -21,9 +21,9 @@ SurtDistortionAudioProcessorEditor::SurtDistortionAudioProcessorEditor (SurtDist
     // create the actual Slider attachment
     
     std::make_unique <juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts,"DRIVE" ,Driveknob);
-    std::make_unique <juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts,"RANGE" ,Driveknob);
-    std::make_unique <juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts,"BLEND" ,Driveknob);
-    std::make_unique <juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts,"Vol" ,Driveknob);
+    std::make_unique <juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts,"RANGE" ,RangeKnob);
+    std::make_unique <juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts,"BLEND" ,BlendKnob);
+    std::make_unique <juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts,"Vol" ,VolKnob);
 }
 
 SurtDistortionAudioProcessorEditor::~SurtDistortionAudioProcessorEditor()
