@@ -107,27 +107,17 @@ void SurtDistortionAudioProcessor::releaseResources()
 #ifndef JucePlugin_PreferredChannelConfigurations
 bool SurtDistortionAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
 {
-  #if JucePlugin_IsMidiEffect
-    juce::ignoreUnused (layouts);
-    return true;
-  #else
-    // This is the place where you check if the layout is supported.
-    // In this template code we only support mono or stereo.
-    // Some plugin hosts, such as certain GarageBand versions, will only
-    // load plugins that support stereo bus layouts.
-    if (layouts.getMainOutputChannelSet() != juce::AudioChannelSet::mono()
-     && layouts.getMainOutputChannelSet() != juce::AudioChannelSet::stereo())
+    // Check for supported mono or stereo output channel sets
+    if (layouts.getMainOutputChannelSet() == juce::AudioChannelSet::mono() ||
+        layouts.getMainOutputChannelSet() == juce::AudioChannelSet::stereo()) {
+        // Check for input/output matching
+        return layouts.getMainInputChannelSet() == layouts.getMainOutputChannelSet();
+    } else {
+        // Unsupported layout
         return false;
-
-    // This checks if the input layout matches the output layout
-   #if ! JucePlugin_IsSynth
-    if (layouts.getMainOutputChannelSet() != layouts.getMainInputChannelSet())
-        return false;
-   #endif
-
-    return true;
-  #endif
+    }
 }
+
 #endif
 
 void SurtDistortionAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
@@ -158,6 +148,8 @@ void SurtDistortionAudioProcessor::processBlock (juce::AudioBuffer<float>& buffe
         // ..do something to the data...
     }
 }
+
+
 
 //==============================================================================
 bool SurtDistortionAudioProcessor::hasEditor() const
@@ -196,7 +188,7 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
         std::vector<std::unique_ptr<juce::RangedAudioParameter>> params;
         
-        params.push_back(std::make_unique<juce::AudioParameterFloat>("DRIVE", "Drive", 0.0f,1.0f,0.5f));
+        params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("DRIVE",1), "Drive", juce::NormalisableRange<float>(-10.0f,10.0f), 0.0f));
         
         
         return {params.begin(), params.end()} ;

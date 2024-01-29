@@ -29,10 +29,11 @@ private:
     
     // creation of Address for Sliders and creation of slider Objects
     
-    std::unique_ptr<juce::Slider> Driveknob = std::make_unique<juce::Slider> ();
-    std::unique_ptr<juce::Slider> RangeKnob = std::make_unique<juce::Slider> ();
-    std::unique_ptr<juce::Slider> BlendKnob = std::make_unique<juce::Slider> ();
-    std::unique_ptr<juce::Slider> VolKnob   = std::make_unique<juce::Slider>  ();
+    std::unique_ptr<juce::Slider> Driveknob; 
+    std::unique_ptr<juce::Slider> RangeKnob;
+    std::unique_ptr<juce::Slider> BlendKnob;
+    std::unique_ptr<juce::Slider> VolKnob;
+    
     
     // creation of pointers of slider attachements to ValueTreeState
     
